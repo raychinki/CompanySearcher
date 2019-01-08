@@ -1,0 +1,442 @@
+﻿<Page
+    x:Class="CompanySearcher.CompanyDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanySearcher"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Windows.UI.Xaml.Media.Animation"
+    mc:Ignorable="d">
+
+    <Page.Transitions>
+        <toolkit:TransitionCollection>
+            <toolkit:NavigationThemeTransition>
+                <toolkit:NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <toolkit:ContinuumNavigationTransitionInfo/>
+                </toolkit:NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </toolkit:NavigationThemeTransition>
+        </toolkit:TransitionCollection>
+    </Page.Transitions>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Height="49" VerticalAlignment="Top">
+            <TextBox Name="currentCpNameTxt" FontSize="18" Margin="3,0,8,0" IsReadOnly="True" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0" TextWrapping="NoWrap" MaxHeight="48"/>
+            <Rectangle Fill="#E51400" Height="1" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Pivot Grid.Row="1" Name="pagePivot" SelectionChanged="pagePivot_SelectionChanged">
+            <PivotItem Name="basicInfoPivotItem" Margin="0,-1,0,0" Background="#e6e6e6">
+                <PivotItem.Header>
+                    <Grid>
+                        <TextBlock Name="basicInfoPivotItemHeader" Text="基本信息" FontSize="18" Foreground="#E58D8D" Tapped="basicInfoPivotItemHeader_Tapped"/>
+                    </Grid>
+                </PivotItem.Header>
+
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0,0,3,0" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="注册号(统一社会信用代码)" Margin="12,0,12,0" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpRegNoTxt" Margin="2,0,12,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="3,0,0,0" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="登记状态" Margin="12,0,12,0" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpStateTxt" Margin="2,0,12,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+                        
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0,0,3,0" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="注册资本" Margin="12,0,12,0" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpCapitalTxt" Margin="2,0,12,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="3,0,0,0" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="法定代表人" Margin="12,0,12,0" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpLegPersonTxt" Margin="2,0,12,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+                        
+                        <Grid Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0,0,3,0" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="成立日期" Margin="12,0,12,0" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpEstDateTxt" Margin="2,0,12,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="3,0,0,0" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="核准日期" Margin="12,0,12,0" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpPreDateTxt" Margin="2,0,12,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0,0,3,0" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="营业期限自" Margin="12,0,12,0" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpBeginDateTxt" Margin="2,0,12,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="3,0,0,0" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="营业期限至" Margin="12,0,12,0" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpEndDateTxt" Margin="2,0,12,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="9" Background="White">
+                            <Grid Grid.Row="1" Margin="12,0,12,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="类型" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="0,5,0,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpTypeTxt" Margin="-10,0,0,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="11" Background="White">
+                            <Grid Grid.Row="1" Margin="12,0,12,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="住所" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="0,5,0,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpAddressTxt" Margin="-10,0,0,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="13" Background="White">
+                            <Grid Grid.Row="1" Margin="12,0,12,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="登记机关" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="0,5,0,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpRegOrgTxt" Margin="-10,0,0,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="15" Background="White">
+                            <Grid Grid.Row="1" Margin="12,0,12,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="经营范围" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="0,5,0,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpScopeTxt" Margin="-10,0,0,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+                        
+                    </Grid>
+                </ScrollViewer>
+            </PivotItem>
+
+            <PivotItem Name="shareholderInfoPivotItem" Margin="0,-1,0,0">
+                <PivotItem.Header>
+                    <Grid>
+                        <TextBlock Name="shareholderInfoPivotItemHeader" Text="股东信息" FontSize="18" Foreground="#E58D8D" Tapped="shareholderInfoPivotItemHeader_Tapped"/>
+                    </Grid>
+                </PivotItem.Header>
+                <Grid>
+                    <ListView Name="shareholderInfoList" Margin="0" Background="#e6e6e6" SelectionChanged="shareholderInfoList_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Grid.Column="1" Margin="-12,0,-12,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Viewbox Grid.Row="1" MaxHeight="85">
+                                        <TextBlock Text="就是药丸药丸药丸药丸药丸药丸药丸药丸药丸药丸啊" Foreground="Transparent"/>
+                                    </Viewbox>
+
+                                    <Grid Grid.Row="1" Background="White">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <SymbolIcon Grid.Column="0" Symbol="{Binding AvatarIcon}" Margin="12,0,0,0"/>
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="5"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBox Grid.Row="1" Text="{Binding Name}" Margin="2,0,2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                            <TextBox Grid.Row="3" Text="{Binding RegionType}" Margin="2,0,2,0" Foreground="Gray" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <TextBox Grid.Row="4" Text="{Binding CerType}" Margin="2,-10,2,0" Foreground="Gray" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock Name="noShareholderInfoTxt" Text="暂无股东信息" FontSize="18" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Name="changeInfoPivotItem" Margin="0,-1,0,0">
+                <PivotItem.Header>
+                    <Grid>
+                        <TextBlock Name="changeInfoPivotItemHeader" Text="变更信息" FontSize="18" Foreground="#E58D8D" Tapped="changeInfoPivotItemHeader_Tapped"/>
+                    </Grid>
+                </PivotItem.Header>
+                <Grid>
+                    <ListView Name="changeInfoList" Margin="0" Background="#e6e6e6" SelectionChanged="changeInfoList_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Grid.Column="1" Margin="-12,0,-12,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Viewbox Grid.Row="1" MaxHeight="85">
+                                        <TextBlock Text="就是药丸药丸药丸药丸药丸药丸药丸药丸药丸药丸啊" Foreground="Transparent"/>
+                                    </Viewbox>
+
+                                    <Grid Grid.Row="1" Background="White">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBox Grid.Row="0" Text="{Binding Date}" Margin="2,0,2,0" Foreground="Gray" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <TextBox Grid.Row="1" Text="{Binding Title}" Margin="2,-10,2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+
+                                        <Rectangle Grid.Row="1" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBox Grid.Row="0" Text="变更前" Foreground="Gray" Margin="2,0,0,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                                <TextBox Grid.Row="1" Text="{Binding ContentBefore}" Margin="2,0,0,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                            </Grid>
+
+                                            <FontIcon Grid.Column="1" FontFamily="Segoe UI Symbol" Glyph="&#xE095;" Margin="2,0,2,0"/>
+
+                                            <Grid Grid.Column="2">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBox Grid.Row="0" Text="变更后" Foreground="Gray" Margin="0,0,12,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                                <TextBox Grid.Row="1" Text="{Binding ContentAfter}" Margin="0,0,12,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock Name="noChangeInfoTxt" Text="暂无变更信息" FontSize="18" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Name="chekInfoPivotItem" Margin="0,-1,0,0">
+                <PivotItem.Header>
+                    <Grid>
+                        <TextBlock Name="checkInfoPivotItemHeader" Text="抽查检查" FontSize="18" Foreground="#E58D8D" Tapped="chekInfoPivotItemHeader_Tapped"/>
+                    </Grid>
+                </PivotItem.Header>
+                <Grid>
+                    <ListView Name="checkInfoList" Margin="0" Background="#e6e6e6" SelectionChanged="chekInfoList_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Grid.Column="1" Margin="-12,0,-12,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Viewbox Grid.Row="1" MaxHeight="85">
+                                        <TextBlock Text="就是药丸药丸药丸药丸药丸药丸药丸药丸药丸药丸啊" Foreground="Transparent"/>
+                                    </Viewbox>
+
+                                    <Grid Grid.Row="1" Background="White">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="1" Margin="12,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="日期:" Margin="0,2,0,0" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Date}" Margin="-10,0,2,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Margin="12,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="类型:" Margin="0,-8,0,0" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Type}" Margin="-10,-10,2,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Margin="12,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="实施机关:" Margin="0,-8,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding CheckOrg}" Margin="-10,-10,2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                        <Rectangle Grid.Row="4" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                        <Grid Grid.Row="5" Margin="12,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="结果:" Margin="0,3,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Result}" Margin="-10,0,2,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock Name="noCheckInfoTxt" Text="暂无抽查检查信息" FontSize="18" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                </Grid>
+            </PivotItem>
+
+            <!--<PivotItem Name="reportInfoPivotItem" Margin="0,-1,0,0">
+                <PivotItem.Header>
+                    <Grid>
+                        <TextBlock Name="reportInfoPivotItemHeader" Text="企业年报" FontSize="18" Foreground="#E58D8D" Tapped="changeInfoPivotItemHeader_Tapped"/>
+                    </Grid>
+                </PivotItem.Header>
+
+            </PivotItem>-->
+        </Pivot>
+
+        <ProgressRing Grid.Row="1" Name="progressRing" Margin="0,-49,0,0" Height="100" Width="100" Foreground="#E51400" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+    </Grid>
+</Page>
