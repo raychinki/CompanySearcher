@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Data.Json;
 using Windows.Foundation;
@@ -29,6 +30,10 @@ namespace CompanySearcher
     {
         private ObservableCollection<SearchedCompanyListItem> searchedCompanyListItems = new ObservableCollection<SearchedCompanyListItem>();
         private SearchedCompanyClipboardItem scciForClipboard = new SearchedCompanyClipboardItem("", "", "", "", "");
+        public ScrollViewer scrollViewer = new ScrollViewer();
+        public ScrollBar verticalScrollBar = new ScrollBar();
+        private int searchedCompanyCountInPage = 20, searchedCompanyPageIndex = 1;
+        private string searchString = "";
 
         public SearchListPage()
         {
@@ -52,7 +57,7 @@ namespace CompanySearcher
                     loadSearchedCompanyList(await client.GetStringAsync(url));
 
                     progressRing.IsActive = false;
-                    if(searchedCompanyListItems.Count == 0)
+                    if (searchedCompanyListItems.Count == 0)
                         noResultTxt.Visibility = Visibility.Visible;
                 }
             }
@@ -66,9 +71,9 @@ namespace CompanySearcher
         {
             JsonObject jContents = JsonObject.Parse(contents);
             JsonArray jaCompanies = jContents.GetNamedArray("result");
-            
+
             ObservableCollection<SearchedCompanyListItem> tempListItems = new ObservableCollection<SearchedCompanyListItem>();
-            string id, regNo, name, status, type, estDate, legPerson, regOrg, rN, recColor, nameColor, summaryColor; 
+            string id, regNo, name, status, type, estDate, legPerson, regOrg, rN, recColor, nameColor, summaryColor;
             for (int i = 0; i < jaCompanies.Count; i++)
             {
                 JsonObject jo = jaCompanies[i].GetObject();
@@ -97,7 +102,7 @@ namespace CompanySearcher
                 SearchedCompanyListItem scli = new SearchedCompanyListItem(id, regNo, name, status, type, estDate, legPerson, regOrg, rN, recColor, nameColor, summaryColor);
                 tempListItems.Add(scli);
             }
-            
+
             foreach (var item in new ObservableCollection<SearchedCompanyListItem>(tempListItems.OrderByDescending(item => item.RN)))
                 searchedCompanyListItems.Add(item);
         }
@@ -122,14 +127,34 @@ namespace CompanySearcher
             {
                 e.Handled = true;
                 searchedCompanyListItems.Clear();
-                httpClient_loadSearchedCompanyList(WebUrl.getSearchedCompanyListJsonHead + Functions.convertStringToBase64(searchTxtBox.Text) + WebUrl.getSearchedCompanyListJsonCenter + "1" + WebUrl.getSearchedCompanyListJsonEnd + "10");
+                searchedCompanyPageIndex = 1;
+                if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
+                {
+                    backgroundImg.Visibility = Visibility.Visible;
+                    noResultTxt.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    searchString = searchTxtBox.Text;
+                    httpClient_loadSearchedCompanyList(WebUrl.getSearchedCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getSearchedCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getSearchedCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+                }
             }
         }
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
             searchedCompanyListItems.Clear();
-            httpClient_loadSearchedCompanyList(WebUrl.getSearchedCompanyListJsonHead + Functions.convertStringToBase64(searchTxtBox.Text) + WebUrl.getSearchedCompanyListJsonCenter + "1" + WebUrl.getSearchedCompanyListJsonEnd + "10");
+            searchedCompanyPageIndex = 1;
+            if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
+            {
+                backgroundImg.Visibility = Visibility.Visible;
+                noResultTxt.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                searchString = searchTxtBox.Text;
+                httpClient_loadSearchedCompanyList(WebUrl.getSearchedCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getSearchedCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getSearchedCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+            }
         }
 
         private void searchedCompanyItemGrid_Holding(object sender, HoldingRoutedEventArgs e)
@@ -188,6 +213,31 @@ namespace CompanySearcher
             var template = searchedCompanyList.SelectedItem as SearchedCompanyListItem;
             Frame.Navigate(typeof(CompanyDetailPage), "id=" + template.Id + "&regNo=" + template.RegNo + "&name=" + template.Name);
             searchedCompanyList.SelectedItem = null;
+        }
+
+        private void searchedCompanyList_Loaded(object sender, RoutedEventArgs e)
+        {
+            scrollViewer = Functions.FindVisualChildByName<ScrollViewer>(searchedCompanyList, "ScrollViewer");
+            verticalScrollBar = Functions.FindVisualChildByName<ScrollBar>(scrollViewer, "VerticalScrollBar");
+            verticalScrollBar.ValueChanged += verticalScrollBar_ValueChanged;
+        }
+
+        private void verticalScrollBar_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (e.NewValue > e.OldValue && e.NewValue >= (verticalScrollBar.Maximum - 200))
+            {
+                if (searchedCompanyPageIndex < 5 && !progressRing.IsActive && searchedCompanyListItems.Count == (searchedCompanyPageIndex * searchedCompanyCountInPage))
+                {
+                    Task.Factory.StartNew(async () =>
+                    {
+                        await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            searchedCompanyPageIndex++;
+                            httpClient_loadSearchedCompanyList(WebUrl.getSearchedCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getSearchedCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getSearchedCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+                        });
+                    });
+                }
+            }
         }
     }
 }

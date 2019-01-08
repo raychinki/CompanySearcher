@@ -31,10 +31,19 @@
             <Rectangle Fill="#E51400" Height="1" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <ListView Grid.Row="2" Name="abnormalCompanyList" Margin="0,-1,0,-1" SelectionChanged="abnormalCompanyList_SelectionChanged">
+        <ListView Grid.Row="2" Name="abnormalCompanyList" Margin="0,-1,0,-1" SelectionChanged="abnormalCompanyList_SelectionChanged" Loaded="abnormalCompanyList_Loaded">
+            <ListView.Resources>
+                <MenuFlyout x:Name="menuFlyout" Closed="menuFlyout_Closed">
+                    <MenuFlyoutItem Name="copyNameButton" Text="复制公司名称" Click="copyNameButton_Click" />
+                    <MenuFlyoutItem Name="copyRegNoButton" Text="复制注册号" Click="copyRegNoButton_Click" />
+                    <MenuFlyoutItem Name="copyDateButton" Text="复制被列入日期" Click="copyDateButton_Click" />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Name="copyCompanyAbnormalInfoButton" Text="复制经营异常信息" Click="copyCompanyAbnormalInfoButton_Click" />
+                </MenuFlyout>
+            </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Name="abnormalCompanyItemGrid" Holding="abnormalCompanyItemGrid_Holding" RightTapped="abnormalCompanyItemGrid_RightTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1"/>
                             <RowDefinition Height="Auto"/>

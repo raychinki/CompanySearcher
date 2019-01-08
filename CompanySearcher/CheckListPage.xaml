@@ -31,10 +31,19 @@
             <Rectangle Fill="#E51400" Height="1" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <ListView Grid.Row="2" Name="checkCompanyList" Margin="0,-1,0,-1" SelectionChanged="checkCompanyList_SelectionChanged">
+        <ListView Grid.Row="2" Name="checkCompanyList" Margin="0,-1,0,-1" SelectionChanged="checkCompanyList_SelectionChanged" Loaded="checkCompanyList_Loaded">
+            <ListView.Resources>
+                <MenuFlyout x:Name="menuFlyout" Closed="menuFlyout_Closed">
+                    <MenuFlyoutItem Name="copyNameButton" Text="复制公司名称" Click="copyNameButton_Click" />
+                    <MenuFlyoutItem Name="copyDateButton" Text="复制抽查日期" Click="copyDateButton_Click" />
+                    <MenuFlyoutItem Name="copyResultButton" Text="复制抽查结果" Click="copyResultButton_Click" />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Name="copyCompanyCheckInfoButton" Text="复制抽查检查信息" Click="copyCompanyCheckInfoButton_Click" />
+                </MenuFlyout>
+            </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Name="checkCompanyItemGrid" Holding="checkCompanyItemGrid_Holding" RightTapped="checkCompanyItemGrid_RightTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1"/>
                             <RowDefinition Height="Auto"/>

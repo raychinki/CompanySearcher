@@ -118,13 +118,15 @@ namespace CompanySearcher
                 name = jo.GetNamedString("INV");
                 regionType = jo.GetNamedString("INVTYPE");
                 cerType = jo.GetNamedString("BLICTYPE");
-                if (cerType == "营业执照")
+                if (regionType.Contains("公民"))
+                {
+                    avatarIcon = "Contact";
+                }
+                else
                 {
                     avatarIcon = "People";
                     cerType += " " + jo.GetNamedString("BLICNO");
                 }
-                else if(cerType == "身份证")
-                    avatarIcon = "Contact";
 
                 CompanyShareholderInfoListItem csili = new CompanyShareholderInfoListItem(name, regionType, cerType, avatarIcon);
                 shareholderInfoListItems.Add(csili);

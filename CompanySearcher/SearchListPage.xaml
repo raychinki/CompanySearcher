@@ -31,7 +31,7 @@
             <Rectangle Fill="#E51400" Height="1" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <ListView Grid.Row="2" Name="searchedCompanyList" Margin="0,-1,0,-1" SelectionChanged="searchedCompanyList_SelectionChanged">
+        <ListView Grid.Row="2" Name="searchedCompanyList" Margin="0,-1,0,-1" SelectionChanged="searchedCompanyList_SelectionChanged" Loaded="searchedCompanyList_Loaded">
             <ListView.Resources>                
                 <MenuFlyout x:Name="menuFlyout" Closed="menuFlyout_Closed">
                     <MenuFlyoutItem Name="copyNameButton" Text="复制公司名称" Click="copyNameButton_Click" />

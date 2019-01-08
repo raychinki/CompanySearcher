@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -27,6 +29,11 @@ namespace CompanySearcher
     public sealed partial class CheckListPage : Page
     {
         private ObservableCollection<CheckCompanyListItem> checkCompanyListItems = new ObservableCollection<CheckCompanyListItem>();
+        private SearchedCompanyClipboardItem scciForClipboard = new SearchedCompanyClipboardItem("", "", "", "", "");
+        public ScrollViewer scrollViewer = new ScrollViewer();
+        public ScrollBar verticalScrollBar = new ScrollBar();
+        private int searchedCompanyCountInPage = 20, searchedCompanyPageIndex = 1;
+        private string searchString = "";
 
         public CheckListPage()
         {
@@ -34,7 +41,7 @@ namespace CompanySearcher
 
             NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + WebUrl.getCheckCompanyListJsonCenter1 + "1" + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + "20");
+            httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + WebUrl.getCheckCompanyListJsonCenter1 + "1" + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
 
             checkCompanyList.ItemsSource = checkCompanyListItems;
         }
@@ -108,6 +115,31 @@ namespace CompanySearcher
             checkCompanyList.SelectedItem = null;
         }
 
+        private void checkCompanyList_Loaded(object sender, RoutedEventArgs e)
+        {
+            scrollViewer = Functions.FindVisualChildByName<ScrollViewer>(checkCompanyList, "ScrollViewer");
+            verticalScrollBar = Functions.FindVisualChildByName<ScrollBar>(scrollViewer, "VerticalScrollBar");
+            verticalScrollBar.ValueChanged += verticalScrollBar_ValueChanged;
+        }
+
+        private void verticalScrollBar_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (e.NewValue > e.OldValue && e.NewValue >= (verticalScrollBar.Maximum - 200))
+            {
+                if (searchedCompanyPageIndex < 5 && !progressRing.IsActive && checkCompanyListItems.Count == (searchedCompanyPageIndex * searchedCompanyCountInPage))
+                {
+                    Task.Factory.StartNew(async () =>
+                    {
+                        await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            searchedCompanyPageIndex++;
+                            httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getCheckCompanyListJsonCenter1 + searchedCompanyPageIndex.ToString() + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+                        });
+                    });
+                }
+            }
+        }
+
         private void searchTxtBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码")
@@ -128,17 +160,74 @@ namespace CompanySearcher
             {
                 e.Handled = true;
                 checkCompanyListItems.Clear();
-                httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchTxtBox.Text) + WebUrl.getCheckCompanyListJsonCenter1 + "1" + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + "10");
+                searchedCompanyPageIndex = 1;
+                if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
+                    searchString = "";
+                else
+                    searchString = searchTxtBox.Text;
+                httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getCheckCompanyListJsonCenter1 + searchedCompanyPageIndex.ToString() + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
             }
         }
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
             checkCompanyListItems.Clear();
-            if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码")
-                httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + WebUrl.getCheckCompanyListJsonCenter1 + "1" + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + "20");
+            searchedCompanyPageIndex = 1;
+            if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
+                searchString = "";
             else
-                httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchTxtBox.Text) + WebUrl.getCheckCompanyListJsonCenter1 + "1" + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + "10");
+                searchString = searchTxtBox.Text;
+            //httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + WebUrl.getCheckCompanyListJsonCenter1 + "1" + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+            httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getCheckCompanyListJsonCenter1 + searchedCompanyPageIndex.ToString() + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+        }
+
+        private void menuFlyout_Closed(object sender, object e)
+        {
+            scciForClipboard = new SearchedCompanyClipboardItem("", "", "", "", "");
+        }
+
+        private void copyNameButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataPackage dp = new DataPackage();
+            dp.SetText(scciForClipboard.Name);
+            Clipboard.SetContent(dp);
+        }
+
+        private void copyDateButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataPackage dp = new DataPackage();
+            dp.SetText(scciForClipboard.EstDate);
+            Clipboard.SetContent(dp);
+        }
+
+        private void copyResultButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataPackage dp = new DataPackage();
+            dp.SetText(scciForClipboard.LegPerson);
+            Clipboard.SetContent(dp);
+        }
+
+        private void copyCompanyCheckInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataPackage dp = new DataPackage();
+            dp.SetText("公司名称: " + scciForClipboard.Name + "\r\n注册号: " + scciForClipboard.RegNo + "\r\n抽查日期: " + scciForClipboard.EstDate + "\r\n抽查结果: " + scciForClipboard.LegPerson);
+            Clipboard.SetContent(dp);
+        }
+
+        private void checkCompanyItemGrid_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            CheckCompanyListItem ccli = (sender as Grid).DataContext as CheckCompanyListItem;
+            scciForClipboard = new SearchedCompanyClipboardItem(ccli.RegNo, ccli.Name, ccli.Date, ccli.Result, "");
+
+            menuFlyout.ShowAt(checkCompanyList, e.GetPosition(checkCompanyList));
+        }
+
+        private void checkCompanyItemGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            CheckCompanyListItem ccli = (sender as Grid).DataContext as CheckCompanyListItem;
+            scciForClipboard = new SearchedCompanyClipboardItem(ccli.RegNo, ccli.Name, ccli.Date, ccli.Result, "");
+
+            menuFlyout.ShowAt(checkCompanyList, e.GetPosition(checkCompanyList));
         }
     }
 }

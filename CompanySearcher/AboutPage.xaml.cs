@@ -43,7 +43,7 @@ namespace CompanySearcher
 
         private void rateButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9NBLGGH5VZ67"));
         }
 
         private void reviewButton_Click(object sender, RoutedEventArgs e)

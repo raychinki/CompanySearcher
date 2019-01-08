@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace CompanySearcher
@@ -57,6 +59,27 @@ namespace CompanySearcher
             catch
             {
             }
+        }
+
+        public static T FindVisualChildByName<T>(DependencyObject parent, string name) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                string controlName = child.GetValue(Control.NameProperty) as string;
+                if (controlName == name)
+                {
+                    return child as T;
+                }
+                else
+                {
+                    T result = FindVisualChildByName<T>(child, name);
+                    if (result != null)
+                        return result;
+                }
+
+            }
+            return null;
         }
     }
 }

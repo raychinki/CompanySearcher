@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="18bcb466-cd3f-43d8-90ea-216c8d61073e" Publisher="CN=Ray" Version="1.2.0.0" />
+  <Identity Name="55424RaychinkiStudio.10202A9B57737" Publisher="CN=394A0FCA-BDE4-48DE-87AC-162A52D02791" Version="1.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="18bcb466-cd3f-43d8-90ea-216c8d61073e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>CompanySearcher</DisplayName>
-    <PublisherDisplayName>Ray</PublisherDisplayName>
+    <DisplayName>江苏企业查询</DisplayName>
+    <PublisherDisplayName>Raychinki Studio</PublisherDisplayName>
     <Logo>Assets\NewStoreLogo.png</Logo>
   </Properties>
   <Dependencies>
