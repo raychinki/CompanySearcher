@@ -24,5 +24,13 @@ namespace CompanySearcher
         public static string getCompanyBasicInfoJsonHead = "http://www.jsgsj.gov.cn:58888/XhsPhone/MainServlet.json?sendAllMessage&EntId=";
         public static string getCompanyBasicInfoJsonCenter = "&EntNo=";
         public static string getCompanyBasicInfoJsonEnd = "&Info=";
+
+        public static string getCompanyReportListJsonHead = "http://www.jsgsj.gov.cn:58888/XhsPhone/MainServlet.json?queryBusiness&EntId=";
+        public static string getCompanyReportListJsonCenter = "&EntNo=";
+        public static string getCompanyReportListJsonEnd = "&Info=";
+
+        public static string getReportBasicInfoJsonHead = "http://www.jsgsj.gov.cn:58888/XhsPhone/MainServlet.json?queryNB&EntId=";
+        public static string getReportBasicInfoJsonCenter = "&EntNo=";
+        public static string getReportBasicInfoJsonEnd = "&Id=";
     }
 }

@@ -111,7 +111,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="48" />
                     </Grid.RowDefinitions>
-                    <ListView Name="splitTopList" Grid.Row="1" IsItemClickEnabled="True" ItemClick="splitTopList_ItemClick" SelectionChanged="splitTopList_SelectionChanged">
+                    <ListView Name="splitTopList" Grid.Row="1" IsItemClickEnabled="True" ItemClick="splitTopList_ItemClick">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="2,0,0,0" Height="48">
@@ -121,7 +121,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <ListView Name="splitBottomList" Grid.Row="2" IsItemClickEnabled="True" ItemClick="splitBottomList_ItemClick" SelectionChanged="splitBottomList_SelectionChanged">
+                    <ListView Name="splitBottomList" Grid.Row="2" IsItemClickEnabled="True" ItemClick="splitBottomList_ItemClick">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="2,0,0,0" Height="48">

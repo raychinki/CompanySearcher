@@ -25,7 +25,7 @@ namespace CompanySearcher
     public sealed partial class AboutPage : Page
     {
         private int lisaImgCount = 0;
-        private String versionString = Package.Current.Id.Version.Major + "." + Package.Current.Id.Version.Minor + "." + Package.Current.Id.Version.Build;
+        private String versionString = "v" + Package.Current.Id.Version.Major + "." + Package.Current.Id.Version.Minor + "." + Package.Current.Id.Version.Build;
 
         public AboutPage()
         {

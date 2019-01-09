@@ -53,6 +53,8 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="5"/>
@@ -203,7 +205,22 @@
                             </Grid>
                         </Grid>
 
-                        <Grid Grid.Row="13" Background="White">
+                        <Grid Grid.Row="12" Name="currentCpLocationTopGrid" Visibility="Collapsed" Height="6"/>
+                        <Grid Grid.Row="13" Name="currentCpLocationGrid" Visibility="Collapsed" Background="White">
+                            <Grid Grid.Row="1" Margin="12,0,12,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="经营场所" Foreground="Gray" TextWrapping="NoWrap"/>
+                                <Rectangle Grid.Row="2" Margin="0,5,0,0" Height="1" Fill="#e6e6e6" />
+                                <TextBox Grid.Row="3" Name="currentCpLocationTxt" Margin="-10,0,0,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="15" Background="White">
                             <Grid Grid.Row="1" Margin="12,0,12,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="5"/>
@@ -217,7 +234,7 @@
                             </Grid>
                         </Grid>
 
-                        <Grid Grid.Row="15" Background="White">
+                        <Grid Grid.Row="17" Background="White">
                             <Grid Grid.Row="1" Margin="12,0,12,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="5"/>
@@ -414,7 +431,7 @@
                                                 <ColumnDefinition Width="85" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="结果:" Margin="0,3,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Column="0" Text="结果:" Margin="0,2,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                                             <TextBox Grid.Column="1" Text="{Binding Result}" Margin="-10,0,2,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
                                         </Grid>
                                     </Grid>
@@ -426,14 +443,51 @@
                 </Grid>
             </PivotItem>
 
-            <!--<PivotItem Name="reportInfoPivotItem" Margin="0,-1,0,0">
+            <PivotItem Name="reportInfoPivotItem" Margin="0,-1,0,0">
                 <PivotItem.Header>
                     <Grid>
-                        <TextBlock Name="reportInfoPivotItemHeader" Text="企业年报" FontSize="18" Foreground="#E58D8D" Tapped="changeInfoPivotItemHeader_Tapped"/>
+                        <TextBlock Name="reportInfoPivotItemHeader" Text="年报公示" FontSize="18" Foreground="#E58D8D" Tapped="changeInfoPivotItemHeader_Tapped"/>
                     </Grid>
                 </PivotItem.Header>
+                <Grid>
+                    <ListView Name="reportInfoList" Margin="0" Background="#e6e6e6" SelectionChanged="reportInfoList_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Grid.Column="1" Margin="-12,0,-12,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-            </PivotItem>-->
+                                    <Viewbox Grid.Row="1" MaxHeight="85">
+                                        <TextBlock Text="就是药丸药丸药丸药丸药丸药丸药丸药丸药丸药丸啊" Foreground="Transparent"/>
+                                    </Viewbox>
+
+                                    <Grid Grid.Row="1" Background="White">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <SymbolIcon Grid.Column="0" Symbol="Page2" Margin="12,0,0,0"/>
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="5"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="1" Text="{Binding Name}" Margin="12,2,12,0" TextWrapping="NoWrap" />
+                                            <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                            <TextBlock Grid.Row="3" Text="{Binding Date}" Margin="12,2,12,5" Foreground="Gray" TextWrapping="NoWrap" />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock Name="noReportInfoTxt" Text="暂无年报公示信息" FontSize="18" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                </Grid>
+            </PivotItem>
         </Pivot>
 
         <ProgressRing Grid.Row="1" Name="progressRing" Margin="0,-49,0,0" Height="100" Width="100" Foreground="#E51400" HorizontalAlignment="Center" VerticalAlignment="Center"/>

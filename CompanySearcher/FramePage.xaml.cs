@@ -93,22 +93,26 @@ namespace CompanySearcher
 
         private void contentFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            if (contentFrame.BackStack.Count > 0)
-            {
-                int index = 0;
-                PageStackEntry pse = contentFrame.BackStack[0];
-                foreach (var tempStack in contentFrame.BackStack)
-                {
-                    if (index > 0)
-                    {
-                        if(index == 1 && tempStack.SourcePageType.Name == "SearchListPage")
-                            contentFrame.BackStack.Remove(pse);
-                        else if (tempStack.SourcePageType.Name == e.SourcePageType.Name)
-                            contentFrame.BackStack.Remove(tempStack);
-                    }
-                    index++;
-                }
-            }
+            //if (contentFrame.BackStack.Count > 0)
+            //{
+            //    int index = 0;
+            //    PageStackEntry pse = contentFrame.BackStack[0];
+            //    foreach (var tempStack in contentFrame.BackStack)
+            //    {
+            //        if (index > 0)
+            //        {
+            //            if (index == 1 && tempStack.SourcePageType.Name == "SearchListPage")
+            //            {
+            //                contentFrame.BackStack.Remove(pse);
+            //            }
+            //            else if (tempStack.SourcePageType.Name == e.SourcePageType.Name)
+            //            {
+            //                contentFrame.BackStack.Remove(tempStack);
+            //            }
+            //        }
+            //        index++;
+            //    }
+            //}
 
             if (contentFrame.CanGoBack)
             {
@@ -153,16 +157,6 @@ namespace CompanySearcher
                         splitBottomList.SelectedIndex = -1;
                     } break;
             }
-        }
-
-        private void splitTopList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void splitBottomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void splitTopList_ItemClick(object sender, ItemClickEventArgs e)

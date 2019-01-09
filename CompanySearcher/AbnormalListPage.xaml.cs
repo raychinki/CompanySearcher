@@ -111,54 +111,44 @@ namespace CompanySearcher
 
         private void searchTxtBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码")
-                searchTxtBox.Text = "";
-            searchTxtBox.Foreground = new SolidColorBrush(Colors.Black);
+            //if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码")
+            //    searchTxtBox.Text = "";
+            //else
+            searchTxtBox.SelectAll();
+            //searchTxtBox.Foreground = new SolidColorBrush(Colors.Black);
         }
 
-        private void searchTxtBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (searchTxtBox.Text.Trim() == "")
-                searchTxtBox.Text = "请输入公司名称、注册号或统一社会信用代码";
-            searchTxtBox.Foreground = new SolidColorBrush(Colors.Gray);
-        }
+        //private void searchTxtBox_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (searchTxtBox.Text.Trim() == "")
+        //        searchTxtBox.Text = "请输入公司名称、注册号或统一社会信用代码";
+        //    searchTxtBox.Foreground = new SolidColorBrush(Colors.Gray);
+        //}
 
         private void searchTxtBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            //if (e.Key == Windows.System.VirtualKey.Enter)
-            //{
-            //    e.Handled = true;
-            //    abnormalCompanyListItems.Clear();
-            //    httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + Functions.convertStringToBase64(searchTxtBox.Text) + WebUrl.getAbnormalCompanyListJsonCenter + "1" + WebUrl.getAbnormalCompanyListJsonEnd + "10");
-            //}
-
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 e.Handled = true;
-                abnormalCompanyListItems.Clear();
-                searchedCompanyPageIndex = 1;
-                if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
-                    searchString = "";
-                else
-                    searchString = searchTxtBox.Text;
-                httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getAbnormalCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getAbnormalCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+                if (!progressRing.IsActive)
+                    searchCompany();
             }
         }
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
-            //    abnormalCompanyListItems.Clear();
-            //    if(searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码")
-            //        httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + WebUrl.getAbnormalCompanyListJsonCenter + "1" + WebUrl.getAbnormalCompanyListJsonEnd + "20");
-            //    else
-            //        httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + Functions.convertStringToBase64(searchTxtBox.Text) + WebUrl.getAbnormalCompanyListJsonCenter + "1" + WebUrl.getAbnormalCompanyListJsonEnd + "10");
+            if (!progressRing.IsActive)
+                searchCompany();
+        }
 
+        private void searchCompany()
+        {
             abnormalCompanyListItems.Clear();
             searchedCompanyPageIndex = 1;
-            if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
-                searchString = "";
-            else
-                searchString = searchTxtBox.Text;
+            //if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
+            //    searchString = "";
+            //else
+            searchString = searchTxtBox.Text.Trim();
             httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getAbnormalCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getAbnormalCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
         }
 

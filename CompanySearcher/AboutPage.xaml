@@ -37,6 +37,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Image Name="logoImg" Grid.Row="0" Source="Assets/CompanySearcher_Logo.png" Margin="20" Width="150" Height="150" Stretch="Uniform" Tapped="logoImg_Tapped"/>
             <!--<Grid Grid.Row="1">
@@ -55,10 +56,11 @@
                 <TextBlock Grid.Column="0" Text="作者:" Foreground="Gray" Margin="0,0,6,0" HorizontalAlignment="Right"/>
                 <TextBlock Grid.Column="1" Text="Raychinki Studio" Margin="6,0,0,0" HorizontalAlignment="Left"/>
             </Grid>-->
-            <TextBlock Grid.Row="1" Name="versionTxt" Text=" " FontSize="18" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="2" Text="Raychinki Studio" FontSize="18" Margin="0,5,0,0" HorizontalAlignment="Center"/>
-            <Button Grid.Row="3" Name="rateButton" Content="我要评分" Margin="0,15,0,0" Width="130" Foreground="White" Background="#E51400" HorizontalAlignment="Center" Click="rateButton_Click"/>
-            <Button Grid.Row="4" Name="reviewButton" Content="我要反馈" Margin="0,15,0,0" Width="130" Foreground="White" Background="#E51400" HorizontalAlignment="Center" Click="reviewButton_Click"/>
+            <TextBlock Grid.Row="1" Text="江苏企业查询" FontSize="20" Foreground="#E51400" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Name="versionTxt" Text=" " FontSize="18" Margin="0,7,0,0" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="3" Text="Raychinki Studio" FontSize="18" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+            <Button Grid.Row="4" Name="rateButton" Content="我要评分" Margin="0,15,0,0" Width="130" Foreground="White" Background="#E51400" HorizontalAlignment="Center" Click="rateButton_Click"/>
+            <Button Grid.Row="5" Name="reviewButton" Content="我要反馈" Margin="0,15,0,0" Width="130" Foreground="White" Background="#E51400" HorizontalAlignment="Center" Click="reviewButton_Click"/>
         </Grid>
 
     </Grid>

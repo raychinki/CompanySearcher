@@ -124,6 +124,9 @@
     <Compile Include="IllegalListPage.xaml.cs">
       <DependentUpon>IllegalListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReportDetailPage.xaml.cs">
+      <DependentUpon>ReportDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchListPage.xaml.cs">
       <DependentUpon>SearchListPage.xaml</DependentUpon>
     </Compile>
@@ -215,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="IllegalListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

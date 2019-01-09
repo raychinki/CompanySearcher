@@ -142,16 +142,7 @@ namespace CompanySearcher
 
         private void searchTxtBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码")
-                searchTxtBox.Text = "";
-            searchTxtBox.Foreground = new SolidColorBrush(Colors.Black);
-        }
-
-        private void searchTxtBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (searchTxtBox.Text.Trim() == "")
-                searchTxtBox.Text = "请输入公司名称、注册号或统一社会信用代码";
-            searchTxtBox.Foreground = new SolidColorBrush(Colors.Gray);
+            searchTxtBox.SelectAll();
         }
 
         private void searchTxtBox_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -159,25 +150,22 @@ namespace CompanySearcher
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 e.Handled = true;
-                checkCompanyListItems.Clear();
-                searchedCompanyPageIndex = 1;
-                if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
-                    searchString = "";
-                else
-                    searchString = searchTxtBox.Text;
-                httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getCheckCompanyListJsonCenter1 + searchedCompanyPageIndex.ToString() + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+                if (!progressRing.IsActive)
+                    searchCompany();
             }
         }
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!progressRing.IsActive)
+                searchCompany();
+        }
+
+        private void searchCompany()
+        {
             checkCompanyListItems.Clear();
             searchedCompanyPageIndex = 1;
-            if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
-                searchString = "";
-            else
-                searchString = searchTxtBox.Text;
-            //httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + WebUrl.getCheckCompanyListJsonCenter1 + "1" + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+            searchString = searchTxtBox.Text.Trim();
             httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getCheckCompanyListJsonCenter1 + searchedCompanyPageIndex.ToString() + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
         }
 

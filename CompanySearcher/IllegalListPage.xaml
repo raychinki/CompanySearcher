@@ -39,8 +39,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Rectangle Grid.Column="0" Margin="12,8,0,8" Fill="White" StrokeThickness="3"/>
-                <TextBox Grid.Column="0" Name="searchTxtBox" Text="请输入公司名称、注册号或统一社会信用代码" Foreground="Gray" Margin="12,8,0,8" BorderBrush="Transparent" IsEnabled="False"/>
+                <Rectangle Grid.Column="0" Margin="12,8,0,7" Fill="White" StrokeThickness="3"/>
+                <TextBox Grid.Column="0" Name="searchTxtBox" PlaceholderText="请输入公司名称、注册号或统一社会信用代码" Margin="12,8,0,7" BorderBrush="Transparent" IsEnabled="False"/>
                 <Button Grid.Column="1" Name="searchButton" Content="&#xe11a;" FontFamily="Segoe MDL2 Assets" FontSize="19" Background="#E51400" Foreground="White" Margin="0,0,12,0"/>
             </Grid>
         </Grid>

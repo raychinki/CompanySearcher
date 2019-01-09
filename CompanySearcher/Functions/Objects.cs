@@ -8,8 +8,7 @@ using Windows.UI;
 namespace CompanySearcher
 {
     public class Objects
-    {
-    }
+    {}
 
     public class SearcherColors
     {
@@ -143,6 +142,55 @@ namespace CompanySearcher
         public string Type { get; set; }
         public string CheckOrg { get; set; }
         public string Result { get; set; }
+    }
+
+    public class CompanyReportInfoListItem
+    {
+        public CompanyReportInfoListItem(string id, string name, string date)
+        {
+            Id = id;
+            Name = name;
+            Date = date;
+        }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Date { get; set; }
+    }
+
+    public class ReportPayInfoListItem
+    {
+        public ReportPayInfoListItem(string name, string conBalance, string conDate, string conType, string paidBalance, string paidDate, string paidType)
+        {
+            Name = name;
+            ConBalance = conBalance;
+            ConDate = conDate;
+            ConType = conType;
+            PaidBalance = paidBalance;
+            PaidDate = paidDate;
+            PaidType = paidType;
+        }
+        public string Name { get; set; }
+        public string ConBalance { get; set; }
+        public string ConDate { get; set; }
+        public string ConType { get; set; }
+        public string PaidBalance { get; set; }
+        public string PaidDate { get; set; }
+        public string PaidType { get; set; }
+    }
+
+    public class ReportWebInfoListItem
+    {
+        public ReportWebInfoListItem(string name, string webType, string url, string avatarIcon)
+        {
+            Name = name;
+            WebType = webType;
+            Url = url;
+            AvatarIcon = avatarIcon;
+        }
+        public string Name { get; set; }
+        public string WebType { get; set; }
+        public string Url { get; set; }
+        public string AvatarIcon { get; set; }
     }
 
     public class SearchedCompanyClipboardItem
