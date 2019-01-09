@@ -88,32 +88,15 @@ namespace CompanySearcher
 
         private void frame_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            contentFrame.GoBack();
+            if (contentFrame != null && contentFrame.CanGoBack)
+            {
+                e.Handled = true;
+                contentFrame.GoBack();
+            }
         }
 
         private void contentFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            //if (contentFrame.BackStack.Count > 0)
-            //{
-            //    int index = 0;
-            //    PageStackEntry pse = contentFrame.BackStack[0];
-            //    foreach (var tempStack in contentFrame.BackStack)
-            //    {
-            //        if (index > 0)
-            //        {
-            //            if (index == 1 && tempStack.SourcePageType.Name == "SearchListPage")
-            //            {
-            //                contentFrame.BackStack.Remove(pse);
-            //            }
-            //            else if (tempStack.SourcePageType.Name == e.SourcePageType.Name)
-            //            {
-            //                contentFrame.BackStack.Remove(tempStack);
-            //            }
-            //        }
-            //        index++;
-            //    }
-            //}
-
             if (contentFrame.CanGoBack)
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -129,22 +112,26 @@ namespace CompanySearcher
                     {
                         splitTopList.SelectedIndex = 0;
                         splitBottomList.SelectedIndex = -1;
-                    } break;
+                    }
+                    break;
                 case "AbnormalListPage":
                     {
                         splitTopList.SelectedIndex = 1;
                         splitBottomList.SelectedIndex = -1;
-                    } break;
+                    }
+                    break;
                 case "IllegalListPage":
                     {
                         splitTopList.SelectedIndex = 2;
                         splitBottomList.SelectedIndex = -1;
-                    } break;
+                    }
+                    break;
                 case "CheckListPage":
                     {
                         splitTopList.SelectedIndex = 3;
                         splitBottomList.SelectedIndex = -1;
-                    } break;
+                    }
+                    break;
                 case "AboutPage":
                     {
                         splitTopList.SelectedIndex = -1;
@@ -155,7 +142,8 @@ namespace CompanySearcher
                     {
                         splitTopList.SelectedIndex = -1;
                         splitBottomList.SelectedIndex = -1;
-                    } break;
+                    }
+                    break;
             }
         }
 
@@ -166,7 +154,7 @@ namespace CompanySearcher
             {
                 case "企业查询":
                     {
-                        if(splitTopList.SelectedIndex != 0)
+                        if (splitTopList.SelectedIndex != 0)
                             contentFrame.Navigate(typeof(SearchListPage));
                     }
                     break;

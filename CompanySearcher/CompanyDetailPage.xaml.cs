@@ -28,10 +28,11 @@ namespace CompanySearcher
         //private ObservableCollection<CompanyBasicInfo> searchedCompanyListItems = new ObservableCollection<CompanyBasicInfo>();
         private ObservableCollection<CompanyShareholderInfoListItem> shareholderInfoListItems = new ObservableCollection<CompanyShareholderInfoListItem>();
         private ObservableCollection<CompanyChangeInfoListItem> changeInfoListItems = new ObservableCollection<CompanyChangeInfoListItem>();
+        private ObservableCollection<CompanyAbnormalInfoListItem> abnormalInfoListItems = new ObservableCollection<CompanyAbnormalInfoListItem>();
         private ObservableCollection<CompanyCheckInfoListItem> checkInfoListItems = new ObservableCollection<CompanyCheckInfoListItem>();
         private ObservableCollection<CompanyReportInfoListItem> reportInfoListItems = new ObservableCollection<CompanyReportInfoListItem>();
         private string currentId, currentRegNo, currentName;
-        private bool isBasicInfoLoaded = false, isCheckInfoLoaded = false, isReportInfoLoaded = false;
+        private bool isBasicInfoLoaded = false, isAbnormalInfoLoaded = false, isCheckInfoLoaded = false, isReportInfoLoaded = false;
 
         public CompanyDetailPage()
         {
@@ -41,6 +42,7 @@ namespace CompanySearcher
 
             shareholderInfoList.ItemsSource = shareholderInfoListItems;
             changeInfoList.ItemsSource = changeInfoListItems;
+            abnormalInfoList.ItemsSource = abnormalInfoListItems;
             checkInfoList.ItemsSource = checkInfoListItems;
             reportInfoList.ItemsSource = reportInfoListItems;
         }
@@ -65,6 +67,7 @@ namespace CompanySearcher
 
             httpClient_loadCompanyBasicInfo(WebUrl.getCompanyBasicInfoJsonHead + currentId + WebUrl.getCompanyBasicInfoJsonCenter + currentRegNo + WebUrl.getCompanyBasicInfoJsonEnd + "RegInfo");
             httpClient_loadCompanyCheckInfo(WebUrl.getCompanyBasicInfoJsonHead + currentId + WebUrl.getCompanyBasicInfoJsonCenter + currentRegNo + WebUrl.getCompanyBasicInfoJsonEnd + "CheckInfo");
+            httpClient_loadCompanyAbnormalInfo(WebUrl.getCompanyBasicInfoJsonHead + currentId + WebUrl.getCompanyBasicInfoJsonCenter + currentRegNo + WebUrl.getCompanyBasicInfoJsonEnd + "ExceInfo");
             httpClient_loadCompanyReportInfo(WebUrl.getCompanyReportListJsonHead + currentId + WebUrl.getCompanyReportListJsonCenter + currentRegNo + WebUrl.getCompanyReportListJsonEnd + "ReportInfo");
         }
 
@@ -72,6 +75,7 @@ namespace CompanySearcher
         {
             shareholderInfoListItems.Clear();
             changeInfoListItems.Clear();
+            abnormalInfoListItems.Clear();
             checkInfoListItems.Clear();
             reportInfoListItems.Clear();
         }
@@ -87,7 +91,7 @@ namespace CompanySearcher
                     loadCompanyBasicInfo(await client.GetStringAsync(url));
 
                     isBasicInfoLoaded = true;
-                    if (isBasicInfoLoaded && isCheckInfoLoaded && isReportInfoLoaded)
+                    if (isBasicInfoLoaded && isAbnormalInfoLoaded && isCheckInfoLoaded && isReportInfoLoaded)
                         progressRing.IsActive = false;
                 }
             }
@@ -190,6 +194,53 @@ namespace CompanySearcher
                 noChangeInfoTxt.Visibility = Visibility.Collapsed;
         }
 
+        private async void httpClient_loadCompanyAbnormalInfo(string url)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    progressRing.IsActive = true;
+
+                    loadCompanyAbnormalInfo(await client.GetStringAsync(url));
+
+                    isAbnormalInfoLoaded = true;
+                    if (isBasicInfoLoaded && isAbnormalInfoLoaded && isCheckInfoLoaded && isReportInfoLoaded)
+                        progressRing.IsActive = false;
+                }
+            }
+            catch
+            {
+                progressRing.IsActive = false;
+            }
+        }
+
+        private void loadCompanyAbnormalInfo(string contents)
+        {
+            JsonObject jContents = JsonObject.Parse(contents);
+            JsonObject jCompanyResult = jContents.GetNamedObject("result");
+            JsonArray jaContents = jCompanyResult.GetNamedArray("ExceInfo");
+
+            string abnOrg, inDate, inReason, outDate, outReason;
+            for (int i = 0; i < jaContents.Count; i++)
+            {
+                JsonObject jo = jaContents[i].GetObject();
+                abnOrg = jo.GetNamedString("DECORG");
+                inDate = jo.GetNamedString("ABNTIME");
+                inReason = jo.GetNamedString("SPECAUSE");
+                outDate = jo.GetNamedString("REMDATE");
+                outReason = jo.GetNamedString("REMEXCPRES");
+
+                CompanyAbnormalInfoListItem caili = new CompanyAbnormalInfoListItem(abnOrg, inDate, inReason, outDate, outReason);
+                abnormalInfoListItems.Add(caili);
+            }
+
+            if (abnormalInfoListItems.Count == 0)
+                noAbnormalInfoTxt.Visibility = Visibility.Visible;
+            else
+                noAbnormalInfoTxt.Visibility = Visibility.Collapsed;
+        }
+
         private async void httpClient_loadCompanyCheckInfo(string url)
         {
             try
@@ -201,7 +252,7 @@ namespace CompanySearcher
                     loadCompanyCheckInfo(await client.GetStringAsync(url));
                     
                     isCheckInfoLoaded = true;
-                    if (isBasicInfoLoaded && isCheckInfoLoaded && isReportInfoLoaded)
+                    if (isBasicInfoLoaded && isAbnormalInfoLoaded && isCheckInfoLoaded && isReportInfoLoaded)
                         progressRing.IsActive = false;
                 }
             }
@@ -247,7 +298,7 @@ namespace CompanySearcher
                     loadCompanyReportInfo(await client.GetStringAsync(url));
 
                     isReportInfoLoaded = true;
-                    if (isBasicInfoLoaded && isCheckInfoLoaded && isReportInfoLoaded)
+                    if (isBasicInfoLoaded && isAbnormalInfoLoaded && isCheckInfoLoaded && isReportInfoLoaded)
                         progressRing.IsActive = false;
                 }
             }
@@ -290,6 +341,7 @@ namespace CompanySearcher
                         basicInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.ShieldRed);
                         shareholderInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         changeInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
+                        abnormalInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         checkInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         reportInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                     }
@@ -299,6 +351,7 @@ namespace CompanySearcher
                         basicInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         shareholderInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.ShieldRed);
                         changeInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
+                        abnormalInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         checkInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         reportInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                     }
@@ -308,6 +361,7 @@ namespace CompanySearcher
                         basicInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         shareholderInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         changeInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.ShieldRed);
+                        abnormalInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         checkInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         reportInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                     }
@@ -317,7 +371,8 @@ namespace CompanySearcher
                         basicInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         shareholderInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         changeInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
-                        checkInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.ShieldRed);
+                        abnormalInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.ShieldRed);
+                        checkInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         reportInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                     }
                     break;
@@ -326,6 +381,17 @@ namespace CompanySearcher
                         basicInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         shareholderInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         changeInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
+                        abnormalInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
+                        checkInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.ShieldRed);
+                        reportInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
+                    }
+                    break;
+                case 5:
+                    {
+                        basicInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
+                        shareholderInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
+                        changeInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
+                        abnormalInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         checkInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.LightRed);
                         reportInfoPivotItemHeader.Foreground = new SolidColorBrush(SearcherColors.ShieldRed);
                     }
@@ -346,6 +412,13 @@ namespace CompanySearcher
             if (changeInfoList.SelectedItem == null)
                 return;
             changeInfoList.SelectedItem = null;
+        }
+
+        private void abnormalInfoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (abnormalInfoList.SelectedItem == null)
+                return;
+            abnormalInfoList.SelectedItem = null;
         }
 
         private void chekInfoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -382,10 +455,22 @@ namespace CompanySearcher
                 pagePivot.SelectedIndex = 2;
         }
 
-        private void chekInfoPivotItemHeader_Tapped(object sender, TappedRoutedEventArgs e)
+        private void abnormalInfoPivotItemHeader_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (pagePivot.SelectedIndex != 3)
                 pagePivot.SelectedIndex = 3;
+        }
+
+        private void chekInfoPivotItemHeader_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (pagePivot.SelectedIndex != 4)
+                pagePivot.SelectedIndex = 4;
+        }
+
+        private void reportInfoPivotItemHeader_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (pagePivot.SelectedIndex != 5)
+                pagePivot.SelectedIndex = 5;
         }
     }
 }

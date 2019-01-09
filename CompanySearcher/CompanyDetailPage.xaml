@@ -288,8 +288,8 @@
                                             </Grid.RowDefinitions>
                                             <TextBox Grid.Row="1" Text="{Binding Name}" Margin="2,0,2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
                                             <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
-                                            <TextBox Grid.Row="3" Text="{Binding RegionType}" Margin="2,0,2,0" Foreground="Gray" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
-                                            <TextBox Grid.Row="4" Text="{Binding CerType}" Margin="2,-10,2,0" Foreground="Gray" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <TextBlock Grid.Row="3" Text="{Binding RegionType}" Margin="12,2,12,0" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Row="4" Text="{Binding CerType}" Margin="12,0,12,5" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -331,8 +331,8 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
-                                            <TextBox Grid.Row="0" Text="{Binding Date}" Margin="2,0,2,0" Foreground="Gray" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
-                                            <TextBox Grid.Row="1" Text="{Binding Title}" Margin="2,-10,2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <TextBlock Grid.Row="0" Text="{Binding Date}" Margin="12,2,12,0" Foreground="Gray" TextWrapping="NoWrap"  TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Row="1" Text="{Binding Title}" Margin="2,-2,2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
                                         </Grid>
 
                                         <Rectangle Grid.Row="1" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
@@ -348,8 +348,8 @@
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <TextBox Grid.Row="0" Text="变更前" Foreground="Gray" Margin="2,0,0,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
-                                                <TextBox Grid.Row="1" Text="{Binding ContentBefore}" Margin="2,0,0,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                                <TextBlock Grid.Row="0" Text="变更前" Foreground="Gray" Margin="12,2,12,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                <TextBox Grid.Row="1" Text="{Binding ContentBefore}" Margin="2,-2,2,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
                                             </Grid>
 
                                             <FontIcon Grid.Column="1" FontFamily="Segoe UI Symbol" Glyph="&#xE095;" Margin="2,0,2,0"/>
@@ -359,8 +359,8 @@
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <TextBox Grid.Row="0" Text="变更后" Foreground="Gray" Margin="0,0,12,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
-                                                <TextBox Grid.Row="1" Text="{Binding ContentAfter}" Margin="0,0,12,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                                <TextBlock Grid.Row="0" Text="变更后" Foreground="Gray" Margin="12,2,12,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                <TextBox Grid.Row="1" Text="{Binding ContentAfter}" Margin="2,-2,2,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
                                             </Grid>
                                         </Grid>
                                     </Grid>
@@ -369,6 +369,88 @@
                         </ListView.ItemTemplate>
                     </ListView>
                     <TextBlock Name="noChangeInfoTxt" Text="暂无变更信息" FontSize="18" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Name="abnormalInfoPivotItem" Margin="0,-1,0,0">
+                <PivotItem.Header>
+                    <Grid>
+                        <TextBlock Name="abnormalInfoPivotItemHeader" Text="经营异常" FontSize="18" Foreground="#E58D8D" Tapped="abnormalInfoPivotItemHeader_Tapped"/>
+                    </Grid>
+                </PivotItem.Header>
+                <Grid>
+                    <ListView Name="abnormalInfoList" Margin="0" Background="#e6e6e6" SelectionChanged="abnormalInfoList_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Grid.Column="1" Margin="-12,0,-12,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Viewbox Grid.Row="1" MaxHeight="85">
+                                        <TextBlock Text="就是药丸药丸药丸药丸药丸药丸药丸药丸药丸药丸啊" Foreground="Transparent"/>
+                                    </Viewbox>
+
+                                    <Grid Grid.Row="1" Background="White">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="1" Margin="12,0,12,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="实施机关:" Margin="0,2,0,0" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding AbnOrg}" Margin="-10,0,-2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                        <Rectangle Grid.Row="2" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                        <Grid Grid.Row="3" Margin="12,0,12,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="列入时间:" Margin="0,2,0,0" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding InDate}" Margin="-10,0,-2,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                        <Grid Grid.Row="4" Margin="12,0,12,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="列入原因:" Margin="0,-8,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding InReason}" Margin="-10,-10,-2,-5" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                        <Rectangle Grid.Row="5" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
+                                        <Grid Grid.Row="6" Margin="12,0,12,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="移出时间:" Margin="0,2,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding OutDate}" Margin="-10,0,-2,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                        <Grid Grid.Row="7" Margin="12,0,12,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="移出原因:" Margin="0,-8,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                            <TextBox Grid.Column="1" Text="{Binding OutReason}" Margin="-10,-10,-2,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock Name="noAbnormalInfoTxt" Text="暂无经营异常信息" FontSize="18" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
                 </Grid>
             </PivotItem>
 
@@ -401,38 +483,38 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="1" Margin="12,0,0,0">
+                                        <Grid Grid.Row="1" Margin="12,0,12,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="85" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Text="日期:" Margin="0,2,0,0" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                                            <TextBox Grid.Column="1" Text="{Binding Date}" Margin="-10,0,2,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Date}" Margin="-10,0,-2,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
                                         </Grid>
-                                        <Grid Grid.Row="2" Margin="12,0,0,0">
+                                        <Grid Grid.Row="2" Margin="12,0,12,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="85" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Text="类型:" Margin="0,-8,0,0" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                                            <TextBox Grid.Column="1" Text="{Binding Type}" Margin="-10,-10,2,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Type}" Margin="-10,-10,-2,0" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
                                         </Grid>
-                                        <Grid Grid.Row="3" Margin="12,0,0,0">
+                                        <Grid Grid.Row="3" Margin="12,0,12,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="85" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Text="实施机关:" Margin="0,-8,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                                            <TextBox Grid.Column="1" Text="{Binding CheckOrg}" Margin="-10,-10,2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <TextBox Grid.Column="1" Text="{Binding CheckOrg}" Margin="-10,-10,-2,-10" Background="Transparent" TextWrapping="NoWrap" IsReadOnly="True" BorderThickness="0"/>
                                         </Grid>
                                         <Rectangle Grid.Row="4" Margin="12,5,12,0" Height="1" Fill="#e6e6e6" />
-                                        <Grid Grid.Row="5" Margin="12,0,0,0">
+                                        <Grid Grid.Row="5" Margin="12,0,12,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="85" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Text="结果:" Margin="0,2,0,0" FontSize="15" Foreground="Gray" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                                            <TextBox Grid.Column="1" Text="{Binding Result}" Margin="-10,0,2,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Result}" Margin="-10,0,-2,0" Background="Transparent" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"/>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -446,7 +528,7 @@
             <PivotItem Name="reportInfoPivotItem" Margin="0,-1,0,0">
                 <PivotItem.Header>
                     <Grid>
-                        <TextBlock Name="reportInfoPivotItemHeader" Text="年报公示" FontSize="18" Foreground="#E58D8D" Tapped="changeInfoPivotItemHeader_Tapped"/>
+                        <TextBlock Name="reportInfoPivotItemHeader" Text="年报公示" FontSize="18" Foreground="#E58D8D" Tapped="reportInfoPivotItemHeader_Tapped"/>
                     </Grid>
                 </PivotItem.Header>
                 <Grid>

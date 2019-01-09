@@ -129,6 +129,23 @@ namespace CompanySearcher
         public string ContentAfter { get; set; }
     }
 
+    public class CompanyAbnormalInfoListItem
+    {
+        public CompanyAbnormalInfoListItem(string abnOrg ,string inDate, string inReason, string outDate, string outReason)
+        {
+            AbnOrg = abnOrg;
+            InDate = inDate;
+            InReason = inReason;
+            OutDate = outDate;
+            OutReason = outReason;
+        }
+        public string AbnOrg { get; set; }
+        public string InDate { get; set; }
+        public string InReason { get; set; }
+        public string OutDate { get; set; }
+        public string OutReason { get; set; }
+    }
+
     public class CompanyCheckInfoListItem
     {
         public CompanyCheckInfoListItem(string date, string type, string checkOrg, string result)

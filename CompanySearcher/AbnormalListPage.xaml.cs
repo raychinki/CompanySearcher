@@ -105,7 +105,7 @@ namespace CompanySearcher
             if (abnormalCompanyList.SelectedItem == null)
                 return;
             var template = abnormalCompanyList.SelectedItem as AbnormalCompanyListItem;
-            Frame.Navigate(typeof(CompanyDetailPage), "id=" + template.Id + "&regNo=" + template.RegNo + "&name=" + template.Name);
+            Frame.Navigate(typeof(CompanyDetailPage), "id=" + template.Id + "&regNo=" + template.RegNo + "&name=" + template.Name + "&index=3");
             abnormalCompanyList.SelectedItem = null;
         }
 

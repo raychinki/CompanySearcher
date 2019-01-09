@@ -111,7 +111,7 @@ namespace CompanySearcher
             if (checkCompanyList.SelectedItem == null)
                 return;
             var template = checkCompanyList.SelectedItem as CheckCompanyListItem;
-            Frame.Navigate(typeof(CompanyDetailPage), "id=" + template.Id + "&regNo=" + template.RegNo + "&name=" + template.Name + "&index=3");
+            Frame.Navigate(typeof(CompanyDetailPage), "id=" + template.Id + "&regNo=" + template.RegNo + "&name=" + template.Name + "&index=4");
             checkCompanyList.SelectedItem = null;
         }
 
