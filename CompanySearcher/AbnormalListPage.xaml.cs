@@ -78,7 +78,7 @@ namespace CompanySearcher
             for (int i = 0; i < jaCompanies.Count; i++)
             {
                 JsonObject jo = jaCompanies[i].GetObject();
-                id = jo.GetNamedValue("ID").ToString();
+                id = jo.GetNamedString("ID");
                 regNo = jo.GetNamedString("REGNO");
                 name = jo.GetNamedString("ENTNAME");
                 abnDate = jo.GetNamedString("ABNDATE");
