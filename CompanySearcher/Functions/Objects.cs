@@ -99,6 +99,25 @@ namespace CompanySearcher
         public string RecColor { get; set; }
     }
 
+    public class NoticeListItem
+    {
+        public NoticeListItem(string id, string noticeName, string noticeDate, string companyName, string companyId, string companyNo)
+        {
+            Id = id;
+            NoticeName = noticeName;
+            NoticeDate = noticeDate;
+            CompanyName = companyName;
+            CompanyId = companyId;
+            CompanyNo = companyNo;
+        }
+        public string Id { get; set; }
+        public string NoticeName { get; set; }
+        public string NoticeDate { get; set; }
+        public string CompanyName { get; set; }
+        public string CompanyId { get; set; }
+        public string CompanyNo { get; set; }
+    }
+
     public class CompanyShareholderInfoListItem
     {
         public CompanyShareholderInfoListItem(string name, string regionType, string cerType, string avatarIcon)
@@ -226,6 +245,7 @@ namespace CompanySearcher
         public string LegPerson { get; set; }
         public string RegOrg { get; set; }
     }
+
 
     //public class CompanyBasicInfo
     //{

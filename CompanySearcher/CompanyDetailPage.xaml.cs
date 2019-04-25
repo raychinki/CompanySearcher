@@ -54,11 +54,6 @@ namespace CompanySearcher
             if (e.NavigationMode != NavigationMode.New)
                 return;
 
-            pagePivot.SelectedIndex = 0;
-            string pivotIndex = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "index");
-            if (pivotIndex != "")
-                pagePivot.SelectedIndex = Convert.ToInt32(pivotIndex);
-
             currentId = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "id");
             currentRegNo = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "regNo");
             currentCpNameTxt.Text = currentName = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "name");
@@ -69,10 +64,30 @@ namespace CompanySearcher
             httpClient_loadCompanyCheckInfo(WebUrl.getCompanyBasicInfoJsonHead + currentId + WebUrl.getCompanyBasicInfoJsonCenter + currentRegNo + WebUrl.getCompanyBasicInfoJsonEnd + "CheckInfo");
             httpClient_loadCompanyAbnormalInfo(WebUrl.getCompanyBasicInfoJsonHead + currentId + WebUrl.getCompanyBasicInfoJsonCenter + currentRegNo + WebUrl.getCompanyBasicInfoJsonEnd + "ExceInfo");
             httpClient_loadCompanyReportInfo(WebUrl.getCompanyReportListJsonHead + currentId + WebUrl.getCompanyReportListJsonCenter + currentRegNo + WebUrl.getCompanyReportListJsonEnd + "ReportInfo");
+            
+            string pivotIndex = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "index");
+            if (pivotIndex != "")
+                pagePivot.SelectedIndex = Convert.ToInt32(pivotIndex);
+            else
+                pagePivot.SelectedIndex = 0;
         }
 
         private void clearItems()
         {
+            currentCpRegNoTxt.Text = "";
+            currentCpStateTxt.Text = "";
+            currentCpCapitalTxt.Text = "";
+            currentCpLegPersonTxt.Text = "";
+            currentCpEstDateTxt.Text = "";
+            currentCpPreDateTxt.Text = "";
+            currentCpBeginDateTxt.Text = "";
+            currentCpEndDateTxt.Text = "";
+            currentCpTypeTxt.Text = "";
+            currentCpAddressTxt.Text = "";
+            currentCpLocationTxt.Text = "";
+            currentCpRegOrgTxt.Text = "";
+            currentCpScopeTxt.Text = "";
+
             shareholderInfoListItems.Clear();
             changeInfoListItems.Clear();
             abnormalInfoListItems.Clear();

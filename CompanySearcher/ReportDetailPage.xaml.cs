@@ -34,8 +34,6 @@ namespace CompanySearcher
         {
             this.InitializeComponent();
 
-            NavigationCacheMode = NavigationCacheMode.Enabled;
-
             payInfoList.ItemsSource = payInfoListItems;
             webInfoList.ItemsSource = webInfoListItems;
         }
@@ -47,22 +45,12 @@ namespace CompanySearcher
             if (e.NavigationMode != NavigationMode.New)
                 return;
 
-            pagePivot.SelectedIndex = 0;
-
             currentId = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "id");
             currentRegNo = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "regNo");
             currentCpNameTxt.Text = currentName = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "name");
             currentReportId = Functions.tryGetValueFromNavigation(e.Parameter.ToString(), "reportId");
-
-            clearItems();
-
+            
             httpClient_loadReportBasicInfo(WebUrl.getReportBasicInfoJsonHead + currentId + WebUrl.getReportBasicInfoJsonCenter + currentRegNo + WebUrl.getReportBasicInfoJsonEnd + currentReportId);
-        }
-
-        private void clearItems()
-        {
-            payInfoListItems.Clear();
-            webInfoListItems.Clear();
         }
 
         private async void httpClient_loadReportBasicInfo(string url)

@@ -63,9 +63,9 @@ namespace CompanySearcher
 
             splitTopItems.Add(new SplitListItem("企业查询", "Find"));
             splitTopItems.Add(new SplitListItem("经营异常", "ReportHacked"));
-            splitTopItems.Add(new SplitListItem("严重违法", "Admin"));
             splitTopItems.Add(new SplitListItem("抽查检查", "View"));
-            //splitTopItems.Add(new SplitListItem("信息公告", "Page2"));
+            splitTopItems.Add(new SplitListItem("公告信息", "Admin"));
+            //splitTopItems.Add(new SplitListItem("严重违法", "Admin"));
 
             splitBottomItems.Add(new SplitListItem("关于", "Flag"));
             //splitBottomItems.Add(new SplitListItem("系统设置", "Setting"));
@@ -120,13 +120,13 @@ namespace CompanySearcher
                         splitBottomList.SelectedIndex = -1;
                     }
                     break;
-                case "IllegalListPage":
+                case "CheckListPage":
                     {
                         splitTopList.SelectedIndex = 2;
                         splitBottomList.SelectedIndex = -1;
                     }
                     break;
-                case "CheckListPage":
+                case "NoticeListPage":
                     {
                         splitTopList.SelectedIndex = 3;
                         splitBottomList.SelectedIndex = -1;
@@ -164,17 +164,17 @@ namespace CompanySearcher
                             contentFrame.Navigate(typeof(AbnormalListPage));
                     }
                     break;
-                case "严重违法":
-                    {
-                        //contentFrame.Navigate(typeof(CompanyDetailPage), "id=128549&regNo=320000000035248&name=苏宁云商集团股份有限公司");
-                        if (splitTopList.SelectedIndex != 2)
-                            contentFrame.Navigate(typeof(IllegalListPage));
-                    }
-                    break;
                 case "抽查检查":
                     {
-                        if (splitTopList.SelectedIndex != 3)
+                        if (splitTopList.SelectedIndex != 2)
                             contentFrame.Navigate(typeof(CheckListPage));
+                    }
+                    break;
+                case "公告信息":
+                    {
+                        //contentFrame.Navigate(typeof(CompanyDetailPage), "id=128549&regNo=320000000035248&name=苏宁云商集团股份有限公司");
+                        if (splitTopList.SelectedIndex != 3)
+                            contentFrame.Navigate(typeof(NoticeListPage));
                     }
                     break;
                 default: break;

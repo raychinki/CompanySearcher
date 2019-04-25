@@ -1,0 +1,1 @@
+C:\Users\Ray\Documents\Visual Studio 2015\Projects\CompanySearcher\CompanySearcher\bin\ARM\Release\Upload\CompanySearcher_1.5.0.0\CompanySearcher_1.5.0.0_x86_x64_arm.msixbundle

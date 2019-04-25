@@ -24,7 +24,7 @@ namespace CompanySearcher
     /// </summary>
     public sealed partial class AboutPage : Page
     {
-        private int lisaImgCount = 0;
+        private int lisaImgCount = 1;
         private String versionString = "v" + Package.Current.Id.Version.Major + "." + Package.Current.Id.Version.Minor + "." + Package.Current.Id.Version.Build;
 
         public AboutPage()
@@ -38,7 +38,14 @@ namespace CompanySearcher
         {
             lisaImgCount++;
             if (lisaImgCount == 5)
-                Functions.loadUIEImg(logoImg, "Assets/Lisa_Img.png");
+            {
+                Functions.loadUIEImg(logoImg, "Assets/Lisa_Google_Img.png");
+                lisaImgCount = 0;
+            }
+            else if (lisaImgCount == 1)
+            {
+                Functions.loadUIEImg(logoImg, "Assets/CompanySearcher_Logo.png");
+            }
         }
 
         private void rateButton_Click(object sender, RoutedEventArgs e)
@@ -52,7 +59,7 @@ namespace CompanySearcher
             emailComposeTask.Subject = "反馈:江苏企业查询(" + versionString + ")";
             emailComposeTask.To.Add(new EmailRecipient()
             {
-                Address = "admin@raychinki.com"
+                Address = "admin@raychinki.studio"
             });
             EmailManager.ShowComposeNewEmailAsync(emailComposeTask);
         }

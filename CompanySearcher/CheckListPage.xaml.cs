@@ -41,9 +41,17 @@ namespace CompanySearcher
 
             NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + WebUrl.getCheckCompanyListJsonCenter1 + "1" + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
-
             checkCompanyList.ItemsSource = checkCompanyListItems;
+
+            searchCompany();
+        }
+
+        private void searchCompany()
+        {
+            checkCompanyListItems.Clear();
+            searchedCompanyPageIndex = 1;
+            searchString = searchTxtBox.Text.Trim();
+            httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getCheckCompanyListJsonCenter1 + searchedCompanyPageIndex.ToString() + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
         }
 
         private async void httpClient_loadCheckCompanyList(string url)
@@ -86,7 +94,7 @@ namespace CompanySearcher
                 if (result.Contains("正常"))
                     recColor = "Green";
                 else
-                    recColor = "Black";
+                    recColor = "#E51400";
 
                 CheckCompanyListItem ccili = new CheckCompanyListItem(id, regNo, name, date, result, recColor);
                 tempListItems.Add(ccili);
@@ -159,14 +167,6 @@ namespace CompanySearcher
         {
             if (!progressRing.IsActive)
                 searchCompany();
-        }
-
-        private void searchCompany()
-        {
-            checkCompanyListItems.Clear();
-            searchedCompanyPageIndex = 1;
-            searchString = searchTxtBox.Text.Trim();
-            httpClient_loadCheckCompanyList(WebUrl.getCheckCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getCheckCompanyListJsonCenter1 + searchedCompanyPageIndex.ToString() + WebUrl.getCheckCompanyListJsonCenter2 + "1" + WebUrl.getCheckCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
         }
 
         private void menuFlyout_Closed(object sender, object e)

@@ -67,7 +67,7 @@
                                     <ColumnDefinition Width="8"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Width="3" HorizontalAlignment="Left" Fill="Black"/>
+                                <Rectangle Grid.Column="0" Width="3" HorizontalAlignment="Left" Fill="#E51400"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="18" Foreground="#245180" TextWrapping="Wrap"/>
                             </Grid>
                             <Grid Grid.Row="1" Margin="0,2,0,0">

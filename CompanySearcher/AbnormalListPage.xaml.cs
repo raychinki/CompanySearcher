@@ -41,9 +41,20 @@ namespace CompanySearcher
 
             NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + WebUrl.getAbnormalCompanyListJsonCenter + "1" + WebUrl.getAbnormalCompanyListJsonEnd + "20");
-
             abnormalCompanyList.ItemsSource = abnormalCompanyListItems;
+
+            searchCompany();
+        }
+
+        private void searchCompany()
+        {
+            abnormalCompanyListItems.Clear();
+            searchedCompanyPageIndex = 1;
+            //if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
+            //    searchString = "";
+            //else
+            searchString = searchTxtBox.Text.Trim();
+            httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getAbnormalCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getAbnormalCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
         }
 
         private async void httpClient_loadAbnormalCompanyList(string url)
@@ -141,17 +152,6 @@ namespace CompanySearcher
                 searchCompany();
         }
 
-        private void searchCompany()
-        {
-            abnormalCompanyListItems.Clear();
-            searchedCompanyPageIndex = 1;
-            //if (searchTxtBox.Text == "请输入公司名称、注册号或统一社会信用代码" || searchTxtBox.Text.Trim() == "")
-            //    searchString = "";
-            //else
-            searchString = searchTxtBox.Text.Trim();
-            httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getAbnormalCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getAbnormalCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
-        }
-
         private void menuFlyout_Closed(object sender, object e)
         {
             scciForClipboard = new SearchedCompanyClipboardItem("", "", "", "", "");
@@ -218,7 +218,8 @@ namespace CompanySearcher
                     {
                         await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
-                            searchedCompanyPageIndex++; httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getAbnormalCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getAbnormalCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
+                            searchedCompanyPageIndex++;
+                            httpClient_loadAbnormalCompanyList(WebUrl.getAbnormalCompanyListJsonHead + Functions.convertStringToBase64(searchString) + WebUrl.getAbnormalCompanyListJsonCenter + searchedCompanyPageIndex.ToString() + WebUrl.getAbnormalCompanyListJsonEnd + searchedCompanyCountInPage.ToString());
                         });
                     });
                 }
